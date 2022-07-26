@@ -1,6 +1,6 @@
 import { render } from "react-dom";
 import React, { useReducer, useEffect, useState } from "react";
-import ReactMapboxGl, { GeoJSONLayer } from "react-mapbox-gl";
+import ReactMapboxGl, { GeoJSONLayer, Marker } from "react-mapbox-gl";
 import DrawControl from "react-mapbox-gl-draw";
 import mapboxgl from "mapbox-gl";
 
@@ -11,6 +11,16 @@ import GeoJsonModel from "./GeoJsonModel";
 import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
 import "./style.css";
 
+const mapStyles = [
+  {
+    'name':'a',
+    'url':'http://osm.bmapsbd.com:8080/styles/barikoi/style.json?key=Mjg5MTpGMDNaTU1HTjZ'
+  },
+  {
+    'name':'b',
+    'url':'mapbox://styles/mapbox/streets-v9'
+  }
+]
 mapboxgl.accessToken = "pk.eyJ1IjoiZmFrZXVzZXJnaXRodWIiLCJhIjoiY2pwOGlneGI4MDNnaDN1c2J0eW5zb2ZiNyJ9.mALv0tCpbYUPtzT7YysA2g";
 
 const Map = ReactMapboxGl({
@@ -69,13 +79,13 @@ function App() {
   return (
     <div className="App">
       <Map
-        style="mapbox://styles/mapbox/streets-v9" // eslint-disable-line
+        style={mapStyles[0].url} // eslint-disable-line
         containerStyle={{
           height: "100vh",
           width: "100vw",
         }}
         zoom={[16]}
-        center={[-73.9757752418518, 40.69144210646147]}
+        center={[90.39017821904588, 23.719800220780733]}
       >
         <DrawControl
           position="top-left"
@@ -87,6 +97,10 @@ function App() {
         {state.layers.map((layer, key) => (
           <GeoJSONLayer key={key} data={layer} />
         ))}
+        {/* longitude = {90.39017821904588} latitude= {23.719800220780733} */}
+         {/* <Marker laglat={[90.39017821904588, 23.719800220780733]}  anchor="bottom" >
+          <img src="./marker.png" />
+        </Marker> */}
       </Map>
       {/* <pre>{JSON.stringify(state, null, 2)}</pre> */}
     </div>
